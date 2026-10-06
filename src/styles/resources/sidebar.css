@@ -1,0 +1,67 @@
+/* Sidebar: active section, themed scrollbar, mobile drawer. JS: src/pages/resources/sidebar.js, drawer.js */
+
+/* Active section */
+.rl-sidebar_section-link .rl-sidebar_link-text { opacity: .8; }
+.rl-sidebar_section-link.is-active .rl-sidebar_link-text { opacity: 1; }
+.rl-sidebar_section-link.is-active .rl-sidebar_badge {
+  background-color: var(--_section-accent---accent);
+  border-color: var(--_section-accent---accent);
+  color: #252525;
+}
+.rl-sidebar_link.is-active { background-color: rgba(255, 255, 255, .08); }
+
+/* Scrollbars: thin, light thumb on a clear track (sidebar + search results) */
+.rl-sidebar_component,
+.rl-modal_body { scrollbar-gutter: stable; }
+.rl-sidebar_component::-webkit-scrollbar,
+.rl-modal_body::-webkit-scrollbar { width: .375rem; }
+.rl-sidebar_component::-webkit-scrollbar-track,
+.rl-modal_body::-webkit-scrollbar-track { background: transparent; margin: .75rem 0; }
+.rl-sidebar_component::-webkit-scrollbar-thumb,
+.rl-modal_body::-webkit-scrollbar-thumb { border-radius: 999px; background: rgba(255, 255, 255, .16); }
+.rl-sidebar_component:hover::-webkit-scrollbar-thumb,
+.rl-modal_body:hover::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .28); }
+.rl-sidebar_component::-webkit-scrollbar-thumb:hover,
+.rl-modal_body::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, .45); }
+@supports not selector(::-webkit-scrollbar) {
+  .rl-sidebar_component,
+  .rl-modal_body { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, .22) transparent; }
+}
+
+/* Tablet and mobile: the sidebar becomes a drawer above the bottom bar */
+@media (max-width: 991px) {
+  .rl-main { padding-left: 0; padding-right: 0; padding-bottom: 5rem; }
+  .rl-mobile-bar_component { display: flex; }
+  .rl-sidebar_component {
+    top: auto;
+    bottom: 5.5rem;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+    max-height: calc(100dvh - 7rem);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 250ms cubic-bezier(.22, 1, .36, 1), transform 250ms cubic-bezier(.22, 1, .36, 1), visibility 0s linear 250ms;
+  }
+  .rl-nav_component.is-open .rl-sidebar_component {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 250ms cubic-bezier(.22, 1, .36, 1), transform 250ms cubic-bezier(.22, 1, .36, 1);
+  }
+  .rl-sidebar_brand,
+  .rl-sidebar_spacer { display: none; }
+  .rl-nav_component.is-open::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rl-sidebar_component { transition: none !important; }
+}

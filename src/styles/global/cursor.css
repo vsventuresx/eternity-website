@@ -1,0 +1,57 @@
+/* Custom cursor. JS: src/global/cursor.js (adds html.has-cursor only on desktop with motion allowed) */
+
+html.has-cursor,
+html.has-cursor * { cursor: none !important; }
+html.has-cursor input,
+html.has-cursor textarea,
+html.has-cursor select { cursor: text !important; }
+
+.ee-cursor { position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none; opacity: 0; transition: opacity 200ms; }
+.ee-cursor.is-on { opacity: 1; }
+
+.ee-cursor_dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: #FF8603;
+}
+.ee-cursor_ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1.5px solid #FF8603;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 11px/1 Poppins, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #fff;
+  transition: width 300ms cubic-bezier(.22, 1, .36, 1), height 300ms cubic-bezier(.22, 1, .36, 1), margin 300ms cubic-bezier(.22, 1, .36, 1), background-color 300ms, border-color 300ms;
+}
+.ee-cursor_label { opacity: 0; transition: opacity 200ms; white-space: nowrap; }
+
+/* States */
+.ee-cursor.is-link .ee-cursor_ring { width: 56px; height: 56px; margin: -28px 0 0 -28px; background: rgba(255, 134, 3, .15); }
+.ee-cursor.is-view .ee-cursor_ring,
+.ee-cursor.is-drag .ee-cursor_ring { width: 88px; height: 88px; margin: -44px 0 0 -44px; }
+.ee-cursor.is-view .ee-cursor_ring { background: #FF8603; }
+.ee-cursor.is-drag .ee-cursor_ring { background: #0b0b0b; border-color: #0b0b0b; }
+.ee-cursor.is-link .ee-cursor_label,
+.ee-cursor.is-view .ee-cursor_label,
+.ee-cursor.is-drag .ee-cursor_label { opacity: 1; }
+.ee-cursor.is-link .ee-cursor_label { color: #FF8603; font-size: 16px; }
+.ee-cursor.is-view .ee-cursor_dot,
+.ee-cursor.is-drag .ee-cursor_dot { opacity: 0; }
+
+/* Over the hero and USP band */
+.ee-cursor.is-inverse .ee-cursor_dot { background: #fff; }
+.ee-cursor.is-inverse .ee-cursor_ring { border-color: #fff; }

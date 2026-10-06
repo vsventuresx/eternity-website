@@ -1,0 +1,21 @@
+/* Horizontal sliders (Our Work, Engineers). JS: src/components/drag-scroll.js, slider-arrows.js */
+
+.home-work_cards,
+.home-team_list {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.home-work_cards::-webkit-scrollbar,
+.home-team_list::-webkit-scrollbar { display: none; }
+.home-team_list img,
+.home-work_cards img { -webkit-user-drag: none; pointer-events: none; }
+
+/* While dragging, snapping and smooth scrolling would fight the pointer */
+.is-dragging { scroll-snap-type: none !important; scroll-behavior: auto !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .home-work_cards,
+  .home-team_list { scroll-behavior: auto; }
+}

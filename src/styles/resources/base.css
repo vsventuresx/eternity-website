@@ -1,0 +1,35 @@
+/* Page theme and section accent colours.
+   Any element with data-accent (bound to the section's Accent option) re-themes everything inside it. */
+
+body { background-color: #000; }
+
+:root,
+[data-accent="Sky"] {
+  --_section-accent---accent: #5aa9e6;
+  --_section-accent---accent-soft: rgba(90, 169, 230, .14);
+  --_section-accent---accent-line: rgba(90, 169, 230, .45);
+}
+[data-accent="Teal"] {
+  --_section-accent---accent: #3cc0a0;
+  --_section-accent---accent-soft: rgba(60, 192, 160, .14);
+  --_section-accent---accent-line: rgba(60, 192, 160, .45);
+}
+[data-accent="Violet"] {
+  --_section-accent---accent: #a18af0;
+  --_section-accent---accent-soft: rgba(161, 138, 240, .14);
+  --_section-accent---accent-line: rgba(161, 138, 240, .45);
+}
+[data-accent="Lime"] {
+  --_section-accent---accent: #a8d26b;
+  --_section-accent---accent-soft: rgba(168, 210, 107, .14);
+  --_section-accent---accent-line: rgba(168, 210, 107, .45);
+}
+
+/* Keyboard focus */
+.rl-sidebar_link:focus-visible,
+.rl-sidebar_section-link:focus-visible,
+.rl-filter_dropdown:focus-visible,
+.rl-view-toggle_button:focus-visible,
+.rl-section-card:focus-visible,
+.rl-article-row:focus-visible,
+.rl-mobile-bar_component a:focus-visible { outline: 2px solid #ff8603; outline-offset: 2px; }

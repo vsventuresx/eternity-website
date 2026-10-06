@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+# dist/ is committed on purpose: jsDelivr serves the built files from each release tag

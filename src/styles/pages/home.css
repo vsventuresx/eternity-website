@@ -1,0 +1,19 @@
+/* Home page. JS: src/pages/home/ */
+
+/* USP word highlight (words start dim, JS lights them on scroll) */
+.usp-word { opacity: .35; transition: opacity .15s linear; }
+
+/* Our Work filter */
+.home-work_category:not(.is-active) .home-work_category-description { display: none; }
+.home-work_category { transition: opacity 300ms cubic-bezier(.22, 1, .36, 1); }
+.home-work_category:hover { opacity: 1; }
+.project-card.is-hidden { display: none; }
+
+/* Services rail */
+.home-services_rail-progress { transition: width 400ms cubic-bezier(.22, 1, .36, 1); }
+.home-services_rail-node { transition: background-color 300ms, transform 300ms cubic-bezier(.22, 1, .36, 1), box-shadow 300ms; }
+.home-services_rail-node.is-active { background-color: #FF8603; transform: scale(1.2); box-shadow: 0 0 0 6px rgba(255, 134, 3, .2); }
+
+@media (prefers-reduced-motion: reduce) {
+  .usp-word { opacity: 1; }
+}

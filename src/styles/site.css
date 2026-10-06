@@ -1,0 +1,18 @@
+/* eternity.design: site-wide styles (dist/site.min.css), loaded in <head> on every page.
+   Only what Webflow classes can't express: keyframes, pseudo-elements, masks, JS-driven states.
+   Client-First utility CSS stays in the Webflow "Global Styles" component. */
+
+@import './global/nav.css';
+@import './global/cursor.css';
+@import './global/glow.css';
+@import './global/sheen.css';
+@import './global/footer.css';
+
+@import './components/ticker.css';
+@import './components/sliders.css';
+@import './components/service-tiers.css';
+@import './components/canada-map.css';
+@import './components/logo-marquee.css';
+@import './components/draw-icons.css';
+
+@import './pages/home.css';

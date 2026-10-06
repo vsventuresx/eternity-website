@@ -1,0 +1,39 @@
+/* Article body (CMS rich text) and aside. Lists, links and callouts pick up the section accent. */
+
+.rl-article_rich-text > :first-child { margin-top: 0; }
+.rl-article_rich-text h2 { margin: 2.5rem 0 1rem; color: #fff; font-size: 1.625rem; font-weight: 600; line-height: 1.3; letter-spacing: -.02em; }
+.rl-article_rich-text h3 { margin: 2rem 0 .75rem; color: #fff; font-size: 1.25rem; font-weight: 600; line-height: 1.4; }
+.rl-article_rich-text h4,
+.rl-article_rich-text h5,
+.rl-article_rich-text h6 { margin: 1.5rem 0 .5rem; color: #fff; font-size: 1rem; font-weight: 600; }
+.rl-article_rich-text p { margin: 0 0 1.25rem; }
+.rl-article_rich-text ul,
+.rl-article_rich-text ol { margin: 0 0 1.25rem; padding-left: 1.25rem; }
+.rl-article_rich-text li { margin-bottom: .375rem; }
+.rl-article_rich-text li::marker { color: var(--_section-accent---accent); }
+/* Blockquotes render as callouts */
+.rl-article_rich-text blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 2px solid var(--_section-accent---accent);
+  border-radius: .625rem;
+  background: rgba(255, 255, 255, .05);
+  color: rgba(255, 255, 255, .85);
+  font-size: .9375rem;
+  line-height: 1.6;
+}
+.rl-article_rich-text a { color: var(--_section-accent---accent); text-decoration: underline; text-underline-offset: .15em; }
+.rl-article_rich-text strong { color: #fff; }
+.rl-article_rich-text figure { margin: 2rem 0; }
+.rl-article_rich-text img { border-radius: .75rem; }
+
+/* "More in {group}" links: accent dot */
+.rl-aside_link::before {
+  content: "";
+  flex: none;
+  width: .375rem;
+  height: .375rem;
+  border-radius: 999px;
+  background: var(--_section-accent---accent);
+  transform: translateY(-.125rem);
+}

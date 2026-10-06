@@ -1,0 +1,33 @@
+/* Canada dot map (On Site Now + footer) and the live dot. JS: src/components/canada-map.js */
+
+.map_component { position: relative; width: 100%; aspect-ratio: 1014 / 880; pointer-events: none; }
+.map_component svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.map_dots { fill: rgba(255, 255, 255, .28); }
+.map_arc { fill: none; stroke: #FF8603; stroke-width: 2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.map_arc-trail { fill: none; stroke: #FF8603; stroke-width: 1; stroke-opacity: .35; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.map_hub-core,
+.map_city { fill: #FF8603; }
+.map_hub-ring {
+  fill: #FF8603;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-pulse 3.2s cubic-bezier(.22, 1, .36, 1) infinite;
+}
+.map_hub-ring.is-delayed { animation-delay: 1.6s; }
+.map_ping { fill: none; stroke: #FF8603; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+@keyframes map-pulse {
+  0% { transform: scale(.4); opacity: .45; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+
+/* "On site now" pulsing dot */
+.live-dot { width: .75rem; height: .75rem; border-radius: 999px; background: #FF8603; animation: ee-live 1.6s ease-in-out infinite; }
+@keyframes ee-live {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 134, 3, .45); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 134, 3, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot { animation: none; }
+  .map_hub-ring { animation: none; opacity: .2; }
+}

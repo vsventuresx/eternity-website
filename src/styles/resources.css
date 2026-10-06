@@ -1,0 +1,9 @@
+/* eternity.design: Resource Library styles (dist/resources.min.css), loaded on Resource Library pages only. */
+
+@import './resources/base.css';
+@import './resources/icons.css';
+@import './resources/sidebar.css';
+@import './resources/cards.css';
+@import './resources/filters.css';
+@import './resources/article.css';
+@import './resources/modal.css';

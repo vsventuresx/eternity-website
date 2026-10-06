@@ -1,0 +1,19 @@
+/* Self-drawing line icons. JS: src/components/draw-icons.js */
+
+.home-cta_step-icon,
+.audience-link_icon { display: flex; justify-content: center; align-items: center; }
+.home-cta_step-icon svg { width: 60%; height: 70%; }
+.audience-link_icon svg { width: 65%; height: 65%; }
+
+.ee-draw path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+/* CTA steps: hidden until scrolled into view (.is-in) */
+.home-cta_step .ee-draw path { stroke-dashoffset: 1; transition: stroke-dashoffset 900ms cubic-bezier(.22, 1, .36, 1); }
+.home-cta_step.is-in .ee-draw path { stroke-dashoffset: 0; }
+/* Audience links: redraw on hover */
+.audience-link:hover .ee-draw path { animation: ee-redraw 600ms cubic-bezier(.22, 1, .36, 1); }
+@keyframes ee-redraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .home-cta_step .ee-draw path { stroke-dashoffset: 0; transition: none; }
+  .audience-link:hover .ee-draw path { animation: none; }
+}

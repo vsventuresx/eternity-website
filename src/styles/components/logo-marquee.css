@@ -1,0 +1,9 @@
+/* Affiliates logo marquee. JS: src/components/logo-marquee.js (duplicates logos, sets --marquee-duration) */
+
+.home-logos_list { display: flex; width: max-content; animation: ee-marquee var(--marquee-duration, 40s) linear infinite; }
+.home-logos_list:hover { animation-play-state: paused; }
+@keyframes ee-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .home-logos_list { animation: none; }
+}

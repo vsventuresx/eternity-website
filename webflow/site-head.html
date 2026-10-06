@@ -1,0 +1,7 @@
+<!-- Webflow → Site settings → Custom code → Head code
+     eternity-website: site styles. When releasing, change the version here AND in site-footer.html and rl-nav-embed.html. -->
+<link id="ee-site-css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vsventuresx/eternity-website@0.1.0/dist/site.min.css">
+<script>
+  // Dev mode (localStorage "ee-dev" = "1"): load styles from `npm run dev` on this computer instead
+  try { if (localStorage.getItem('ee-dev') === '1') document.getElementById('ee-site-css').href = 'http://localhost:3000/site.min.css'; } catch (e) {}
+</script>

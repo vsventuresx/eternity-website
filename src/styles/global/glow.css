@@ -1,0 +1,4 @@
+/* CTA + footer cursor glow. JS: src/global/glow.js (positions are set every frame, so no CSS transition) */
+
+.home-cta_glow,
+.footer_glow { transition: none; will-change: transform; }

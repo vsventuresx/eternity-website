@@ -1,0 +1,49 @@
+/* Fixed header + full-screen menu. JS: src/global/nav.js */
+
+/* Hidden page scrollbar on pages with the main nav: no layout jump when the menu locks scrolling.
+   (Scoped with :has so Resource Library pages, which use their own nav, keep their scrollbar.) */
+html:has(.nav_wrapper) { scrollbar-width: none; -ms-overflow-style: none; }
+html:has(.nav_wrapper)::-webkit-scrollbar,
+html:has(.nav_wrapper) body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+/* Gradient glass: dark + blurred at the top, fading to nothing below the header */
+.nav_header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: -3rem;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(11, 11, 11, .62) 0%, rgba(11, 11, 11, .32) 50%, rgba(11, 11, 11, 0) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 40%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 40%, transparent 100%);
+  transition: opacity 600ms cubic-bezier(.4, 0, .2, 1);
+}
+/* Over light sections the glass eases back so it doesn't read as grey haze (text stays white) */
+.nav_header.is-on-light::before { opacity: .6; }
+.nav_wrapper.is-menu-open .nav_header::before { opacity: 0; }
+.nav_wrapper.is-menu-open .nav_header { transform: none; }
+
+/* Menu toggle → ✕ */
+.nav_menu-line { transform-origin: center; }
+.nav_wrapper.is-menu-open .nav_menu-line.is-top { transform: translateY(5px) rotate(45deg); }
+.nav_wrapper.is-menu-open .nav_menu-line.is-bottom { transform: translateY(-5px) rotate(-45deg); }
+
+.nav_wrapper.is-menu-open .button.is-nav { opacity: 0; pointer-events: none; }
+.button.is-nav { transition: opacity 300ms cubic-bezier(.22, 1, .36, 1), background-color 300ms cubic-bezier(.22, 1, .36, 1); }
+.menu_component { will-change: clip-path; -webkit-backdrop-filter: blur(28px) saturate(140%); }
+
+/* No backdrop-filter support: solid fallbacks */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav_header::before { background: linear-gradient(180deg, rgba(11, 11, 11, .85) 0%, rgba(11, 11, 11, 0) 100%); }
+  .menu_component { background-color: rgba(11, 11, 11, .96) !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav_header,
+  .nav_header::before { transition: none; }
+}
