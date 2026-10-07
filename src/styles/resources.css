@@ -1,4 +1,5 @@
-/* eternity.design: Resource Library styles (dist/resources.min.css), loaded on Resource Library pages only. */
+/* Resource Library styles, bundled into dist/site.min.css (imported at the end of site.css).
+   Every rule is scoped to rl-* classes or RL data attributes, so it's inert on other pages. */
 
 @import './resources/base.css';
 @import './resources/icons.css';

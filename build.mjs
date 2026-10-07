@@ -1,6 +1,7 @@
-// Builds the two bundles Webflow loads:
-//   dist/site.min.js + dist/site.min.css             every page
-//   dist/resources.min.js + dist/resources.min.css   Resource Library pages only
+// Builds what Webflow loads (see webflow/head-code.html):
+//   dist/site.min.css      all styles, every page
+//   dist/site.min.js       every page
+//   dist/resources.min.js  only on pages with the RL sidebar
 //
 //   npm run build   minified production build (commit dist/ before tagging a release)
 //   npm run dev     rebuilds on save and serves dist/ at http://localhost:3000 (see webflow/README.md)
@@ -18,7 +19,6 @@ const options = {
     { in: 'src/site.js', out: 'site.min' },
     { in: 'src/resources.js', out: 'resources.min' },
     { in: 'src/styles/site.css', out: 'site.min' },
-    { in: 'src/styles/resources.css', out: 'resources.min' },
   ],
   outdir: 'dist',
   bundle: true,

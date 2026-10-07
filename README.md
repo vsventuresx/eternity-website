@@ -5,11 +5,15 @@ Custom code for **[eternity.design](https://eternity.design)**, the Eternity Eng
 Webflow hosts the pages. This repo holds only the custom behaviour and styles that Webflow can't do natively. It builds them into a few small files that the site loads from jsDelivr.
 
 ```
-src/  ──(npm run build)──▶  dist/site.min.js + site.min.css           every page
-                            dist/resources.min.js + resources.min.css Resource Library only
+src/  ──(npm run build)──▶  dist/site.min.css      all styles, every page
+                            dist/site.min.js       every page
+                            dist/resources.min.js  only pages with the RL sidebar
                                    │
                                    ▼
-       https://cdn.jsdelivr.net/gh/vsventuresx/eternity-website@<version>/dist/...  ──▶  Webflow
+       https://cdn.jsdelivr.net/gh/vsventuresx/eternity-website@<version>/dist/...
+                                   │
+                                   ▼
+       Webflow: one snippet in Site settings → Head code (webflow/head-code.html)
 ```
 
 ## Folder structure
@@ -17,7 +21,7 @@ src/  ──(npm run build)──▶  dist/site.min.js + site.min.css           
 ```
 src/
 ├─ site.js                 Entry: every page. Lists every module it starts.
-├─ resources.js            Entry: Resource Library pages only.
+├─ resources.js            Entry: Resource Library pages only (loaded when .rl-nav_component exists).
 ├─ global/                 On every page (nav, footer, cursor, glow)
 ├─ components/             Reusable pieces, wherever they appear (ticker, sliders, map…)
 ├─ pages/
@@ -26,7 +30,7 @@ src/
 ├─ assets/                 Shared artwork as code (the infinity mark)
 ├─ utils/                  Small helpers (DOM, reduced motion, safe storage, module runner)
 └─ styles/                 CSS that Webflow classes can't express, mirroring the JS folders
-webflow/                   Snippets to paste into Webflow + migration and dev-mode notes
+webflow/                   The Head code snippet + setup and dev-mode notes
 dist/                      Built output, committed, served by jsDelivr (don't edit by hand)
 ```
 
@@ -92,9 +96,9 @@ npm run build      # production build into dist/
 2. `npm run build`.
 3. Commit (including `dist/`), then tag and push:
    ```bash
-   git tag 0.2.0
+   git tag 0.3.0
    git push && git push --tags
    ```
-4. In Webflow, change `@0.1.0` → `@0.2.0` in the three snippets (`webflow/`), then publish.
+4. In Webflow → Site settings → Head code, change the version in the stylesheet link (e.g. `@0.2.0` → `@0.3.0`), then publish.
 
-**Rollback:** point the snippets back at the previous version and publish. Never use `@main` or `@latest` on the live site: jsDelivr caches them unpredictably.
+**Rollback:** set the Head code version back to the previous release and publish. Never use `@main` or `@latest` on the live site: jsDelivr caches them unpredictably.

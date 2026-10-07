@@ -1,39 +1,36 @@
 # Webflow setup
 
-How the built files get onto eternity.design, and how to switch the Webflow site over from the old inline embeds.
+How the built files get onto eternity.design.
 
-## Where the code is loaded
+## One snippet, one place
 
-| Snippet | Paste into | Loads |
-|---|---|---|
-| [`site-head.html`](site-head.html) | Site settings → Custom code → **Head code** | `site.min.css` (every page) |
-| [`site-footer.html`](site-footer.html) | Site settings → Custom code → **Footer code** | `site.min.js` (every page) |
-| [`rl-nav-embed.html`](rl-nav-embed.html) | One Code Embed inside the **RL Nav** component | `resources.min.css` + `resources.min.js` (Resource Library pages only) |
+Paste [`head-code.html`](head-code.html) into **Site settings → Custom code → Head code**. That's all the custom code the site needs:
 
-The version number (`@0.1.0`) appears in all three snippets. A release changes it in all three, then you publish.
+| Loads | Where |
+|---|---|
+| `site.min.css` (all styles, including the Resource Library's) | every page |
+| `site.min.js` | every page |
+| `resources.min.js` | only pages with the RL sidebar (`.rl-nav_component`) |
 
-## Migration from the inline embeds (one-time)
+The version (`@0.2.0`) appears once, in the stylesheet link. The scripts load from the same version automatically.
 
-Do this on staging first, check every page, then publish to the live domain.
+**Footer code stays empty.** No code embeds are needed in pages or components, except the markup placeholders the code fills in:
 
-1. Paste the three snippets above.
-2. **Home page**: trim or delete these Code Embeds (the code now lives in the bundle):
+| Placeholder embed | Contents |
+|---|---|
+| On Site Now map, footer map | `<div class="map_component" aria-hidden="true"></div>` |
+| Footer logo | `<div class="footer_logo-svg" style="width:100%;height:100%"></div>` |
+| Nav logo | the logo SVG (artwork) |
+| USP trace drawing, the two tickers | artwork / content markup |
 
-   | Embed (first line) | Action |
-   |---|---|
-   | `<!-- Eternity homepage code: tickers, hero sheen …` | **Delete** |
-   | `<!-- Homepage interactions: Our Work filter …` | **Delete** |
-   | `<!-- Services: desktop = whole card links …` | **Delete** |
-   | `<!-- Footer code: Canada map …` | **Replace** with just `<div class="map_component" aria-hidden="true"></div>` |
-   | `<!-- Footer logo: cloned from the Nav logo …` | **Replace** with just `<div class="footer_logo-svg" style="width:100%;height:100%"></div>` |
-   | USP trace drawing (`<svg class="home-usp_trace-svg" …`) | Keep (artwork, not code) |
-   | The two tickers (`<div class="ticker_component" …`) | Keep (content) |
-   | `<div class="map_component" …>` (On Site Now) | Keep (map placeholder) |
+The **Global Styles** component stays as is: it's Finsweet's Client-First base CSS.
 
-3. **Nav component**: delete the embed starting `<!-- Nav: fixed header with a gradient glass fade …`. Keep the logo SVG embed.
-4. **RL Nav component**: delete the two embeds (`<!-- Resource Library core …` and `<!-- Resource Library search …`) and add one embed with [`rl-nav-embed.html`](rl-nav-embed.html).
-5. **Global Styles component**: leave it. It's Finsweet's Client-First base CSS and belongs in Webflow.
-6. Publish to staging and check: header hide/reveal and menu, tickers, USP highlight, Our Work filter and sliders, services (desktop hover + mobile accordion), maps, logo marquee, cursor and CTA glow, footer logo; on the Resource Library: sidebar, drawer, search, filters, popup, article page.
+## Switching from 0.1.0 (one-time)
+
+1. Replace everything in Head code with [`head-code.html`](head-code.html), and empty Footer code.
+2. **RL Nav component:** delete both code embeds (`<!-- Resource Library core …` and `<!-- Resource Library search …`). Add nothing in their place.
+3. **Home page:** make sure the two footer embeds hold only their placeholders (table above).
+4. Publish to staging and check the home page and every Resource Library page.
 
 ## Dev mode (test local changes on staging)
 
@@ -42,10 +39,10 @@ Do this on staging first, check every page, then publish to the live domain.
    ```js
    localStorage.setItem('ee-dev', '1')
    ```
-3. Reload. That browser now loads the files from your computer; visitors still get the jsDelivr version.
+3. Reload. That browser now loads every file from your computer; visitors still get the jsDelivr version.
    Chrome may ask to let the site "access other apps and services on this device" (local network access): allow it for the staging domain.
 4. Turn it off with `localStorage.removeItem('ee-dev')`.
 
 ## Releasing
 
-See the root [README](../README.md#releasing).
+See the root [README](../README.md#releasing). In Webflow, a release is one edit: the version in the Head code link.

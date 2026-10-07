@@ -1,7 +1,8 @@
 /* Page theme and section accent colours.
    Any element with data-accent (bound to the section's Accent option) re-themes everything inside it. */
 
-body { background-color: #000; }
+/* Black page only where the RL sidebar exists (this stylesheet loads on every page) */
+body:has(.rl-nav_component) { background-color: #000; }
 
 :root,
 [data-accent="Sky"] {
