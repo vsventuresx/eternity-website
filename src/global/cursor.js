@@ -2,13 +2,15 @@
 // States from the element under the pointer:
 //   [data-cursor="view" | "drag"] → large filled ring with a label
 //   links / buttons               → medium ring with ↗
-// Inverts to white over the hero and the USP band. Styles: src/styles/global/cursor.css
+// Inverts to white inside [data-ee-cursor-inverse] (the hero and the USP band).
+// .w-button is Webflow's own button class (fixed by Webflow, can't be renamed).
+// Styles: src/styles/global/cursor.css
 
 import { reduceMotion, finePointer } from '../utils/motion.js';
 
 const LABEL = { link: '↗', view: 'View', drag: '← Drag →' };
 const STATES = ['link', 'view', 'drag'];
-const INVERSE_ZONES = '.section_home-usp, .section_home-hero';
+const INVERSE_ZONES = '[data-ee-cursor-inverse]';
 
 export default function initCursor() {
   if (reduceMotion() || !finePointer() || document.querySelector('.ee-cursor')) return;

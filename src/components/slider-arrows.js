@@ -1,22 +1,23 @@
 // Previous / next arrows for the horizontal sliders. Steps one card (plus the 1.5rem gap).
-// Markup: section > .slider-buttons > .slider-button ×2 (first = previous), and a track in the same section.
+// Hooks (data-ee-slider): prev / next buttons, and a track with cards in the same <section>.
+// Cards hidden by the Our Work filter (.is-hidden, set by work-filter.js) are skipped.
 
-import { $$ } from '../utils/dom.js';
+import { $$, hook } from '../utils/dom.js';
 
-const TRACKS = '.home-work_cards, .home-team_list';
-const CARDS = '.project-card:not(.is-hidden), .team-card';
+const TRACK = hook('slider', 'track');
+const CARD = `${hook('slider', 'card')}:not(.is-hidden)`;
 
 export default function initSliderArrows() {
-  $$('.slider-buttons').forEach((group) => {
-    const section = group.closest('section');
-    const track = section && section.querySelector(TRACKS);
-    if (!track) return;
-    $$('.slider-button', group).forEach((btn, i) => {
+  [['prev', -1], ['next', 1]].forEach(([part, dir]) => {
+    $$(hook('slider', part)).forEach((btn) => {
+      const section = btn.closest('section');
+      const track = section && section.querySelector(TRACK);
+      if (!track) return;
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        const card = track.querySelector(CARDS);
+        const card = track.querySelector(CARD);
         const step = card ? card.getBoundingClientRect().width + 24 : track.clientWidth * 0.8;
-        track.scrollBy({ left: i === 0 ? -step : step });
+        track.scrollBy({ left: dir * step });
       });
     });
   });

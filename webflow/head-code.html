@@ -1,7 +1,7 @@
 <!-- Webflow → Site settings → Custom code → Head code. This is the only custom code snippet the site needs.
-     eternity-website: loads all styles, the site scripts, and the Resource Library scripts on pages with the RL sidebar.
-     Release: change the version (@0.2.0) in the href below. Nothing else needs editing. -->
-<link id="ee-css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vsventuresx/eternity-website@0.2.0/dist/site.min.css">
+     eternity-website: loads all styles and site.min.js; site.min.js loads the Resource Library scripts where needed.
+     Release: change the version (@0.3.0) in the href below. Nothing else needs editing. -->
+<link id="ee-css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vsventuresx/eternity-website@0.3.0/dist/site.min.css">
 <script>
   (function () {
     var css = document.getElementById('ee-css');
@@ -13,15 +13,9 @@
         css.href = base + 'site.min.css';
       }
     } catch (e) {}
-    function load(file) {
-      var s = document.createElement('script');
-      s.src = base + file;
-      s.defer = true;
-      document.head.appendChild(s);
-    }
-    load('site.min.js');
-    document.addEventListener('DOMContentLoaded', function () {
-      if (document.querySelector('.rl-nav_component')) load('resources.min.js');
-    });
+    var s = document.createElement('script');
+    s.src = base + 'site.min.js';
+    s.defer = true;
+    document.head.appendChild(s);
   })();
 </script>

@@ -2,23 +2,31 @@
 // - Header hides on scroll down, reveals on scroll up; always shown near the top and while the menu is open.
 // - The glass eases back over light sections (.is-on-light).
 // - Menu opens with a clip-path wipe and staggered links; Esc closes; focus is trapped while open.
-// Markup: .nav_wrapper > .nav_header (.nav_menu-toggle) + .menu_component (.menu_link, .menu_footer, .credit_link)
+// Hooks (data-ee-nav): wrapper > header (toggle) + menu (link ×n, menu-footer, credit)
 // Styles: src/styles/global/nav.css. Spec: Workspace docs/dev-notes.md > Full-screen menu
 
-import { $, $$ } from '../utils/dom.js';
+import { $, $$, hook } from '../utils/dom.js';
 import { reduceMotion, EASE } from '../utils/motion.js';
 
+const WRAPPER = hook('nav', 'wrapper');
+const HEADER = hook('nav', 'header');
+const TOGGLE = hook('nav', 'toggle');
+const MENU = hook('nav', 'menu');
+const LINK = hook('nav', 'link');
+const MENU_FOOTER = hook('nav', 'menu-footer');
+const CREDIT = hook('nav', 'credit');
+
 export default function initNav() {
-  const wrap = $('.nav_wrapper');
+  const wrap = $(WRAPPER);
   if (!wrap || wrap.dataset.ready) return;
   wrap.dataset.ready = '1';
 
-  const header = $('.nav_header', wrap);
-  const toggle = $('.nav_menu-toggle', wrap);
-  const menu = $('.menu_component', wrap);
+  const header = $(HEADER, wrap);
+  const toggle = $(TOGGLE, wrap);
+  const menu = $(MENU, wrap);
   if (!header || !toggle || !menu) return;
-  const links = $$('.menu_link', menu);
-  const foot = $('.menu_footer', menu);
+  const links = $$(LINK, menu);
+  const foot = $(MENU_FOOTER, menu);
   const reduce = reduceMotion();
   let open = false;
   let busy = false;
@@ -198,7 +206,7 @@ export default function initNav() {
       return;
     }
     if (e.key === 'Tab') {
-      const f = [toggle, ...links, ...$$('.credit_link', menu)];
+      const f = [toggle, ...links, ...$$(CREDIT, menu)];
       const i = f.indexOf(document.activeElement);
       if (e.shiftKey && i <= 0) {
         e.preventDefault();

@@ -1,12 +1,13 @@
 // Mobile/tablet (≤ 991px): the sidebar becomes a drawer opened from the bottom bar.
 // Closes on Esc, outside click, a link click, or when the search popup opens (event "rl:search-open").
-// Markup: .rl-nav_component > .rl-sidebar_component + .rl-mobile-bar_component [data-rl-drawer-toggle]
+// Hooks: [data-rl-nav] > [data-rl-sidebar] + [data-rl-mobile-bar] > [data-rl-drawer-toggle]
+// Sets .is-open on the nav while the drawer is open (styled in CSS).
 // Styles: src/styles/resources/sidebar.css
 
 import { $, $$ } from '../../utils/dom.js';
 
 export default function initDrawer() {
-  const nav = $('.rl-nav_component');
+  const nav = $('[data-rl-nav]');
   if (!nav || nav.dataset.rlDrawer) return;
   nav.dataset.rlDrawer = '1';
   const toggle = $('[data-rl-drawer-toggle]', nav);
@@ -33,7 +34,7 @@ export default function initDrawer() {
       if (toggle) toggle.focus();
     }
   });
-  $$('.rl-sidebar_component a', nav).forEach((a) => {
+  $$('[data-rl-sidebar] a', nav).forEach((a) => {
     a.addEventListener('click', () => {
       if (isOpen() && !a.hasAttribute('data-rl-search-open')) setDrawer(false);
     });
@@ -42,6 +43,6 @@ export default function initDrawer() {
   // Click on the blurred overlay (outside the sidebar and the bar) closes it
   document.addEventListener('click', (e) => {
     if (!isOpen()) return;
-    if (!e.target.closest('.rl-sidebar_component') && !e.target.closest('.rl-mobile-bar_component')) setDrawer(false);
+    if (!e.target.closest('[data-rl-sidebar]') && !e.target.closest('[data-rl-mobile-bar]')) setDrawer(false);
   });
 }

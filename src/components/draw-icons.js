@@ -1,8 +1,9 @@
 // Line icons that draw themselves in (paths from Figma).
 // CTA steps draw on as they scroll into view (staggered 150ms); audience links redraw on hover (CSS).
-// Icons are matched to elements in page order. Markup: .home-cta_step > .home-cta_step-icon, .audience-link_icon
+// Icons are matched to elements in page order.
+// Hooks: data-ee-draw="step" (CTA step, triggers the draw) > data-ee-icon="step"; data-ee-icon="audience"
 
-import { $$ } from '../utils/dom.js';
+import { $$, hook } from '../utils/dom.js';
 import { reduceMotion } from '../utils/motion.js';
 
 const STEP_ICONS = [
@@ -26,10 +27,10 @@ function fill(selector, icons) {
 }
 
 export default function initDrawIcons() {
-  fill('.home-cta_step-icon', STEP_ICONS);
-  fill('.audience-link_icon', AUDIENCE_ICONS);
+  fill(hook('icon', 'step'), STEP_ICONS);
+  fill(hook('icon', 'audience'), AUDIENCE_ICONS);
 
-  const steps = $$('.home-cta_step');
+  const steps = $$(hook('draw', 'step'));
   if (!steps.length) return;
   if (!('IntersectionObserver' in window) || reduceMotion()) {
     steps.forEach((s) => s.classList.add('is-in'));

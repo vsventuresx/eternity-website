@@ -1,6 +1,7 @@
 // Dot-matrix map of Canada with a pulsing Toronto hub and random arcs out to Canadian cities.
 // Used by On Site Now and the footer. Arcs only run while the map is on screen and the tab is visible;
-// with reduced motion the map is static. Markup: <div class="map_component"></div>
+// with reduced motion the map is static.
+// Hook: data-ee-map, on the placeholder in each map Code Embed: <div class="map_component" data-ee-map="true"></div>
 // Styles: src/styles/components/canada-map.css
 
 import { $$ } from '../utils/dom.js';
@@ -126,5 +127,5 @@ function buildMap(host, reduce) {
 
 export default function initCanadaMaps() {
   const reduce = reduceMotion();
-  $$('.map_component').forEach((host) => buildMap(host, reduce));
+  $$('[data-ee-map]').forEach((host) => buildMap(host, reduce));
 }

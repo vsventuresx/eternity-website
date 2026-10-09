@@ -4,9 +4,9 @@
 // - Hides the eyebrow's "· Group" part when the article has no group.
 // - "More in {group}": up to 4 articles from the same group and section (from the hidden list),
 //   excluding this page. Hides the card when there are none.
-// Markup: [data-rl-article][data-rl-current-section][data-rl-current-group] on the page wrapper,
-//         [data-rl-section-link], [data-rl-illustration], [data-rl-who], [data-rl-related] > [data-rl-related-list],
-//         hidden list a[data-rl-rel-item][data-group][data-section-slug]
+// Hooks: [data-rl-article][data-rl-current-section][data-rl-current-group] on the page wrapper,
+//        [data-rl-section-link], [data-rl-eyebrow], [data-rl-illustration], [data-rl-who] > [data-rl-who-text],
+//        [data-rl-related] > [data-rl-related-list], hidden list a[data-rl-rel-item][data-group][data-section-slug]
 
 import { $, $$ } from '../../utils/dom.js';
 
@@ -29,9 +29,9 @@ export default function initArticle() {
   }
 
   const who = $('[data-rl-who]');
-  if (who && isEmpty(who.querySelector('.rl-aside_text'))) who.style.display = 'none';
+  if (who && isEmpty(who.querySelector('[data-rl-who-text]'))) who.style.display = 'none';
 
-  const eyebrow = $('.rl-header_eyebrow', art);
+  const eyebrow = $('[data-rl-eyebrow]', art);
   if (eyebrow && !group && eyebrow.children.length === 3) {
     eyebrow.children[1].style.display = 'none';
     eyebrow.children[2].style.display = 'none';

@@ -1,24 +1,31 @@
 // Our Work: category filter (Projects > Category).
 // Clicking a category shows only its project cards; if a category has no projects yet, all cards stay visible.
-// Markup: .home-work_category (.home-work_category-name), .home-work_cards > .project-card[data-category]
+// Hooks (data-ee-work): category (> category-name), cards > card[data-category].
+// data-ee-work-default marks the category selected on load (otherwise the first).
+// Sets .is-active on the chosen category and .is-hidden on filtered cards (styled in CSS).
 
-import { $, $$ } from '../../utils/dom.js';
+import { $, $$, hook } from '../../utils/dom.js';
+
+const CATEGORY = hook('work', 'category');
+const CATEGORY_NAME = hook('work', 'category-name');
+const CARDS = hook('work', 'cards');
+const CARD = hook('work', 'card');
 
 export default function initWorkFilter() {
-  const categories = $$('.home-work_category');
+  const categories = $$(CATEGORY);
   if (!categories.length) return;
-  const cards = () => $$('.home-work_cards .project-card');
+  const cards = () => $$(`${CARDS} ${CARD}`);
 
   function pick(cat) {
     categories.forEach((c) => {
       c.classList.toggle('is-active', c === cat);
       c.setAttribute('aria-pressed', c === cat);
     });
-    const name = ($('.home-work_category-name', cat) || cat).textContent.trim();
+    const name = ($(CATEGORY_NAME, cat) || cat).textContent.trim();
     const list = cards();
     const any = list.some((k) => k.getAttribute('data-category') === name);
     list.forEach((k) => k.classList.toggle('is-hidden', any && k.getAttribute('data-category') !== name));
-    const track = $('.home-work_cards');
+    const track = $(CARDS);
     if (track) track.scrollLeft = 0;
   }
 
@@ -34,5 +41,5 @@ export default function initWorkFilter() {
     });
   });
 
-  pick($('.home-work_category.is-active') || categories[0]);
+  pick(categories.find((c) => c.hasAttribute('data-ee-work-default')) || categories[0]);
 }

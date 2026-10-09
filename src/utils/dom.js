@@ -6,6 +6,13 @@ export function onReady(fn) {
   else fn();
 }
 
+/**
+ * Selector for a Webflow element tagged with a data attribute: hook('nav', 'toggle') → [data-ee-nav="toggle"].
+ * Scripts find Webflow elements ONLY through these attributes, never by class name,
+ * so renaming or restyling a class in Webflow can't break them. See README → Hooks.
+ */
+export const hook = (module, part) => `[data-ee-${module}="${part}"]`;
+
 /** querySelector, scoped to root (document by default). */
 export const $ = (sel, root = document) => root.querySelector(sel);
 

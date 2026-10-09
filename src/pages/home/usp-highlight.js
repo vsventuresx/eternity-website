@@ -1,15 +1,15 @@
 // USP band: the statement's words light up one by one as it scrolls in.
 // Finishes before the band's bottom edge reaches the bottom of the screen.
-// Markup: .section_home-usp > .home-usp_statement (plain text). Words are wrapped in .usp-word spans.
+// Hooks (data-ee-usp): band > statement (plain text). Words are wrapped in .usp-word spans (created here).
 
-import { $, escapeHtml } from '../../utils/dom.js';
+import { $, escapeHtml, hook } from '../../utils/dom.js';
 import { reduceMotion } from '../../utils/motion.js';
 
 const DIM = 0.35;
 
 export default function initUspHighlight() {
-  const statement = $('.home-usp_statement');
-  const band = $('.section_home-usp');
+  const statement = $(hook('usp', 'statement'));
+  const band = $(hook('usp', 'band'));
   if (!statement || !band || statement.querySelector('.usp-word')) return;
 
   statement.innerHTML = statement.textContent.trim().split(/\s+/)

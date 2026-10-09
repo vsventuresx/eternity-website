@@ -1,9 +1,9 @@
 // Resource Library sidebar (RL Nav component).
-// - Pads section numbers ("4" → "04") on badges and anything with [data-rl-pad="2"].
+// - Pads section numbers ("4" → "04") on anything with [data-rl-pad="2"] (the sidebar badges).
 // - Marks the current section active (section page URL, or [data-rl-current-section] on article pages)
 //   and "Library home" on /resources.
 // - Fills in a section link's URL from data-section-slug if Webflow left it empty.
-// Markup: .rl-nav_component .rl-sidebar_section-link[data-section-slug] > .rl-sidebar_badge + .rl-sidebar_link-text
+// Hooks: [data-rl-nav] > [data-rl-nav-section][data-section-slug] > [data-rl-pad]; [data-rl-home]
 
 import { $, $$ } from '../../utils/dom.js';
 
@@ -17,19 +17,19 @@ export function currentSectionSlug() {
 }
 
 export default function initSidebar() {
-  const nav = $('.rl-nav_component');
+  const nav = $('[data-rl-nav]');
   if (!nav) return;
   const path = location.pathname.replace(/\/$/, '');
 
   // Pad numbers
-  $$('[data-rl-pad], .rl-sidebar_badge').forEach((el) => {
+  $$('[data-rl-pad]').forEach((el) => {
     const n = (el.textContent || '').trim();
     if (/^\d+$/.test(n)) el.textContent = n.padStart(+el.getAttribute('data-rl-pad') || 2, '0');
   });
 
   // Section links: fallback URL + active state
   const cur = currentSectionSlug();
-  $$('.rl-sidebar_section-link', nav).forEach((a) => {
+  $$('[data-rl-nav-section]', nav).forEach((a) => {
     const href = a.getAttribute('href') || '';
     const slug = a.getAttribute('data-section-slug') || href.split('/').pop();
     if (slug && (!href || href === '#' || /^[0-9a-f]{24}$/.test(href))) a.setAttribute('href', `/resource-section/${slug}`);

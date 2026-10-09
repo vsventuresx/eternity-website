@@ -3,6 +3,8 @@
 // rows are regrouped into [data-rl-results-groups] by section (or by sub-group on a section page).
 // Archive: the section cards show until a filter is active, then the results replace them.
 // Section page: 4 rows per group with "View all n". State is kept in ?q=&type=&topic=.
+// Other hooks: [data-rl-page-body] (view mode), [data-rl-tag] (row tags), [data-rl-dropdown] > [data-rl-dropdown-value].
+// The menu, groups and buttons it builds have their own rl-menu_* / rl-articles_* classes (created here).
 // Styles: src/styles/resources/filters.css
 
 import { $, $$, escapeHtml as esc } from '../../../utils/dom.js';
@@ -104,7 +106,7 @@ export default function initFilters() {
   res.dataset.rlReady = '1';
 
   const mode = res.getAttribute('data-rl-results'); // archive | section | page
-  const body = res.closest('.rl-page_body') || document.body;
+  const body = res.closest('[data-rl-page-body]') || document.body;
   const source = $('[data-rl-source]', res) || res;
   let items = parseItems(source);
 
@@ -136,7 +138,7 @@ export default function initFilters() {
   const st = readParams();
   if (input) input.value = st.q;
 
-  $$('.rl-article-row_tag').forEach((t) => { if (same(t.textContent, 'Homeowners')) t.textContent = 'Homeowners'; });
+  $$('[data-rl-tag]').forEach((t) => { if (same(t.textContent, 'Homeowners')) t.textContent = 'Homeowners'; });
 
   // Build groups: by section (archive, results) or by sub-group (section page)
   const bySection = mode !== 'section';
@@ -201,7 +203,7 @@ export default function initFilters() {
   });
   function setDropdownValue(kind, vals) {
     const dd = dropdowns[kind];
-    const el = dd && $('.rl-filter_dropdown-value', dd);
+    const el = dd && $('[data-rl-dropdown-value]', dd);
     if (el) el.textContent = !vals.length ? 'All' : label(vals[0]) + (vals.length > 1 ? ` +${vals.length - 1}` : '');
   }
 

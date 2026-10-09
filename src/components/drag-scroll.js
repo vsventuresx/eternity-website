@@ -1,11 +1,11 @@
 // Mouse drag-to-scroll for horizontal sliders, with a little momentum.
 // Touch keeps the native swipe. A drag never triggers the card link underneath.
-// Applies to: .home-team_list (Engineers), .home-work_cards (Our Work)
+// Hooks: data-ee-slider="track" (Engineers, Our Work)
 
-import { $$ } from '../utils/dom.js';
+import { $$, hook } from '../utils/dom.js';
 import { reduceMotion } from '../utils/motion.js';
 
-const SLIDERS = '.home-team_list, .home-work_cards';
+const SLIDERS = hook('slider', 'track');
 
 function dragScroll(el, reduce) {
   let down = false;

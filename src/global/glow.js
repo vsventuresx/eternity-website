@@ -1,16 +1,16 @@
 // CTA glow that follows the pointer and continues into the footer.
 // One shared target drives both glows, so the light travels across the section boundary
 // (it passes behind the footer panel). Rests centred on the CTA when the pointer leaves.
-// Markup: .section_home-cta > .home-cta_glow, .footer_component > .footer_glow
+// Hooks (data-ee-glow): cta-zone > cta, footer-zone > footer
 
-import { $ } from '../utils/dom.js';
+import { $, hook } from '../utils/dom.js';
 import { reduceMotion, finePointer } from '../utils/motion.js';
 
 export default function initGlow() {
-  const cta = $('.section_home-cta');
-  const glow = $('.home-cta_glow');
-  const foot = $('.footer_component');
-  const fglow = $('.footer_glow');
+  const cta = $(hook('glow', 'cta-zone'));
+  const glow = $(hook('glow', 'cta'));
+  const foot = $(hook('glow', 'footer-zone'));
+  const fglow = $(hook('glow', 'footer'));
   const enabled = !reduceMotion() && finePointer();
 
   if (fglow && (!cta || !enabled)) fglow.style.display = 'none';

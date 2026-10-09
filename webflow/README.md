@@ -10,9 +10,11 @@ Paste [`head-code.html`](head-code.html) into **Site settings → Custom code �
 |---|---|
 | `site.min.css` (all styles, including the Resource Library's) | every page |
 | `site.min.js` | every page |
-| `resources.min.js` | only pages with the RL sidebar (`.rl-nav_component`) |
+| `resources.min.js` | only pages with the RL sidebar (`[data-rl-nav]`), loaded by `site.min.js` |
 
-The version (`@0.2.0`) appears once, in the stylesheet link. The scripts load from the same version automatically.
+The version (`@0.3.0`) appears once, in the stylesheet link. The scripts load from the same version automatically.
+
+**Custom attributes are the scripts' hooks.** Elements the code works with carry `data-ee-*` / `data-rl-*` attributes (Element settings → Custom attributes). Rename or restyle classes freely, but keep those attributes; when duplicating an element, the attributes come along. Full list: root README → Hooks.
 
 **Footer code stays empty.** No code embeds are needed in pages or components, except the markup placeholders the code fills in:
 

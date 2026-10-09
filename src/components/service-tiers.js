@@ -1,19 +1,23 @@
 // Service Tier cards.
 // Desktop: the whole card links to the service (stretched .service-tier_link, CSS only).
 // Mobile (< 768px): accordion, one open at a time, first one open by default.
-// Markup: .service-tier > .service-tier_header + .service-tier_body > .service-tier_body-inner
+// Hooks (data-ee-tier): card > header + body
 // Styles: src/styles/components/service-tiers.css. Spec: Workspace docs/dev-notes.md > Services
 
-import { $$ } from '../utils/dom.js';
+import { $, $$, hook } from '../utils/dom.js';
 import { reduceMotion } from '../utils/motion.js';
 
+const CARD = hook('tier', 'card');
+const HEADER = hook('tier', 'header');
+const BODY = hook('tier', 'body');
+
 export default function initServiceTiers() {
-  const tiers = $$('.service-tier').filter((t) => t.querySelector('.service-tier_header') && t.querySelector('.service-tier_body'));
+  const tiers = $$(CARD).filter((t) => $(HEADER, t) && $(BODY, t));
   if (!tiers.length) return;
 
   const mq = window.matchMedia('(max-width: 767px)');
   const reduce = reduceMotion();
-  const parts = (t) => ({ head: t.querySelector('.service-tier_header'), body: t.querySelector('.service-tier_body') });
+  const parts = (t) => ({ head: $(HEADER, t), body: $(BODY, t) });
 
   function setOpen(t, open, animate) {
     const { head, body } = parts(t);

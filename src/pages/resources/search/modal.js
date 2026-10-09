@@ -315,7 +315,7 @@ export default function initSearchModal() {
 
   // Mac shortcut label
   if (/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) {
-    $$('.rl-sidebar_kbd, .rl-filter_kbd').forEach((k) => {
+    $$('[data-rl-kbd]').forEach((k) => {
       if (/ctrl/i.test(k.textContent)) k.textContent = '⌘K';
     });
   }
